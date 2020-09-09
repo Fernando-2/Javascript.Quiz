@@ -22,13 +22,12 @@ shuffledQs = questions.sort(()=> Math.random() - .5)
 currentQueIndex = 0
 questionContainer.classList.remove('hide');
 setNextQuestion()
-//var Timer = setInterval(function(){  
-    //count++;
-   // counter.textContent = count}, 1000);
-   // if(count === 50){
-       // function stopGame(){
-          //  clearInterval(Timer);
-    //}
+var Timer = setInterval(function(){  
+    count++;
+    counter.textContent = count;
+   if(count >= 10){ stopGame(Timer);
+        
+    }}, 1000)
     //could not figure out how to set up timer yet I know I would need to add
     //another function so when the timer gets to 50 the quiz ends
 //}
@@ -91,7 +90,8 @@ function clearStatusClass(element){
     element.classList.remove('correct');
     element.classList.remove('wrong');
 }
-
+function stopGame(Timer){
+           clearInterval(Timer);}
 // questions array with all of the question objects
 var questions = [
     {
