@@ -1,11 +1,13 @@
 var Start = document.querySelector("#start");
 var Next = document.querySelector("#next");
-var quizTime = 50;
 var count = 0;
-var counter = document.querySelector("#counter")
+var counter = document.querySelector("#counter");
+var scoreHolder = document.querySelector("#scoreContainer");
+var score = 0;
 var questionContainer = document.querySelector("#question-container");
 var questionEl = document.querySelector("#question");
 var answerOps = document.querySelector("#Choices");
+var gameOver = document.querySelector("#GAMEOVER");
 var shuffledQs, currentQueIndex
 //above are the variables needed
 
@@ -22,15 +24,14 @@ shuffledQs = questions.sort(()=> Math.random() - .5)
 currentQueIndex = 0
 questionContainer.classList.remove('hide');
 setNextQuestion()
+//Timer so when the timer hits 20 the game ends
 var Timer = setInterval(function(){  
     count++;
     counter.textContent = count;
-   if(count >= 10){ stopGame(Timer);
+   if(count >= 30){ stopTimer(Timer);
         
     }}, 1000)
-    //could not figure out how to set up timer yet I know I would need to add
-    //another function so when the timer gets to 50 the quiz ends
-//}
+    
 }
 //function to proceed to the next question
 function setNextQuestion(){
@@ -53,8 +54,8 @@ function showQuestion(question){
 }
 //function to reset the page to default so the previous information wont load
 function resetState(){
-    clearStatusClass(document.body)
-   Next.classList.add('hide')
+    clearStatusClass(document.body);
+   Next.classList.add('hide');
     while(answerOps.firstChild){
         answerOps.removeChild
         (answerOps.firstChild)
@@ -72,8 +73,8 @@ function selectAnswer(e){
  if(shuffledQs.length > currentQueIndex + 1){
     Next.classList.remove('hide');
     }else {
-        Start.innerText = 'Restart';
-        Start.classList.remove('hide');
+        Next.classList.add('hide');
+        stopGame();
     }
 }
 //function that states when an object is correct or incorrect
@@ -90,8 +91,22 @@ function clearStatusClass(element){
     element.classList.remove('correct');
     element.classList.remove('wrong');
 }
-function stopGame(Timer){
-           clearInterval(Timer);}
+//function that stops timer then runs game over function
+function stopTimer(Timer){
+    
+           clearInterval(Timer);
+        stopGame();
+        }
+function stopGame(){
+    questionContainer.classList.add('hide')
+    gameOver.classList.remove('hide')
+    
+    //stops game when timer runs out
+    }
+    function saveGame(){
+        
+        //show score and let user type initials
+    }
 // questions array with all of the question objects
 var questions = [
     {
