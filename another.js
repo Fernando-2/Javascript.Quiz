@@ -10,8 +10,11 @@ var questionEl = document.querySelector("#question");
 var answerOps = document.querySelector("#Choices");
 var gameOver = document.querySelector("#GAMEOVER");
 var shuffledQs, currentQueIndex
-//above are the variables needed
-
+var scoreContainer = document.querySelector("#scoreContainer");
+var userScore = document.querySelector("#user-score");
+var form = document.querySelector("#form");
+form.style.display = "none";
+//above are the variables needed to be recorded
 //start and next event listeners to start the game and go through question
 Start.addEventListener('click', startGame);
 Next.addEventListener('click', () =>{
@@ -21,6 +24,8 @@ Next.addEventListener('click', () =>{
 //function to start game
 function startGame(){
 Start.classList.add('hide');
+form.style.display = "none";
+//shuffleQs is used so questions go in a random order
 shuffledQs = questions.sort(()=> Math.random() - .5)
 currentQueIndex = 0
 questionContainer.classList.remove('hide');
@@ -30,16 +35,14 @@ var Timer = setInterval(function(){
     count++;
     counter.textContent = count;
    if(count >= 30){ stopTimer(Timer);
-        
     }}, 1000)
-    
 }
 //function to proceed to the next question
 function setNextQuestion(){
     resetState()
 showQuestion(shuffledQs[currentQueIndex])
 }
-//function to show every question
+//function to show every question and adds proper background from css
 function showQuestion(question){
     questionEl.innerText = question.question
     question.answers.forEach(answer => {
@@ -47,7 +50,7 @@ function showQuestion(question){
         button.innerText = answer.text
         button.classList.add('btn')
         if(answer.correct){
-            button.dataset.correct = answer.correct
+            button.dataset.correct = answer.correct;
         }
         button.addEventListener('click', selectAnswer)
         answerOps.appendChild(button)
@@ -83,8 +86,10 @@ function setStatusClass(element, correct){
     clearStatusClass(element)
     if(correct){
         element.classList.add('correct')
+        score++; -1
     }else{
         element.classList.add('wrong')
+        
     }
 }
 //removes the previous correct and wrong elements 
@@ -92,30 +97,29 @@ function clearStatusClass(element){
     element.classList.remove('correct');
     element.classList.remove('wrong');
 }
+//function ends that pops up at the end of the game when either timer runs out
+//or game is finished then lets you type you initial and puts your score next to
+//it there is a bug where number correct is added to number of questions could not figure out why
 function stopGame(){
     questionContainer.classList.add('hide')
     gameOver.classList.remove('hide')
+    form.style.display = "block";
     var submit = document.querySelector("#submit")
        submit.addEventListener('click',function(event){
            event.preventDefault();
-        localStorage.setItem("initials",initials.value)
-        console.log("x");
+        localStorage.setItem("initials",initials.value);
+        form.style.display = "none";
+        scoreContainer.classList.remove('hide');
+        userScore.textContent = initials.value + " : " + score;
        })
     }
     //function that stops timer then runs game over function
 function stopTimer(Timer){
-    
            clearInterval(Timer);
         stopGame();
         }
 
-    //stops game when timer runs out
-    
-    function saveGame(){ 
-        localStorage.setItem('initials', initials)
-        //show score and let user type initials
-    }
-    saveGame();
+
 // questions array with all of the question objects
 var questions = [
     {
