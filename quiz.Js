@@ -4,6 +4,7 @@ var count = 0;
 var counter = document.querySelector("#counter");
 var scoreHolder = document.querySelector("#scoreContainer");
 var score = 0;
+var initials = document.querySelector("#initials");
 var questionContainer = document.querySelector("#question-container");
 var questionEl = document.querySelector("#question");
 var answerOps = document.querySelector("#Choices");
@@ -91,22 +92,30 @@ function clearStatusClass(element){
     element.classList.remove('correct');
     element.classList.remove('wrong');
 }
-//function that stops timer then runs game over function
+function stopGame(){
+    questionContainer.classList.add('hide')
+    gameOver.classList.remove('hide')
+    var submit = document.querySelector("#submit")
+       submit.addEventListener('click',function(event){
+           event.preventDefault();
+        localStorage.setItem("initials",initials.value)
+        console.log("x");
+       })
+    }
+    //function that stops timer then runs game over function
 function stopTimer(Timer){
     
            clearInterval(Timer);
         stopGame();
         }
-function stopGame(){
-    questionContainer.classList.add('hide')
-    gameOver.classList.remove('hide')
-    
+
     //stops game when timer runs out
-    }
-    function saveGame(){
-        
+    
+    function saveGame(){ 
+        localStorage.setItem('initials', initials)
         //show score and let user type initials
     }
+    saveGame();
 // questions array with all of the question objects
 var questions = [
     {
