@@ -17,7 +17,7 @@ form.style.display = "none";
 //above are the variables needed to be recorded
 //start and next event listeners to start the game and go through question
 Start.addEventListener('click', startGame);
-Next.addEventListener('click', () =>{
+Next.addEventListener('click', function(){
     currentQueIndex++
     setNextQuestion()
     })
@@ -26,7 +26,7 @@ function startGame(){
 Start.classList.add('hide');
 form.style.display = "none";
 //shuffleQs is used so questions go in a random order
-shuffledQs = questions.sort(()=> Math.random() - .5)
+shuffledQs = questions.sort(function(){ Math.random() - .5})
 currentQueIndex = 0
 questionContainer.classList.remove('hide');
 setNextQuestion()
@@ -45,7 +45,7 @@ showQuestion(shuffledQs[currentQueIndex])
 //function to show every question and adds proper background from css
 function showQuestion(question){
     questionEl.innerText = question.question
-    question.answers.forEach(answer => {
+    question.answers.forEach( function(answer) {
         var button = document.createElement('button')
         button.innerText = answer.text
         button.classList.add('btn')
@@ -70,9 +70,12 @@ function selectAnswer(e){
  var selectBtn = e.target
  var correct = selectBtn.dataset.correct
  setStatusClass(document.body, correct)
- Array.from(answerOps.children).forEach(button => {
-     setStatusClass(button, button.dataset.correct)
- })
+ for(var i =0; i < answerOps.children.length; i++){
+     setStatusClass(answerOps.children[i], answerOps.children[i].dataset.correct)
+ }
+ //Array.from(answerOps.children).forEach(button => {
+ //    setStatusClass(button, button.dataset.correct)
+ //})
  Next.classList.remove('hide');
  if(shuffledQs.length > currentQueIndex + 1){
     Next.classList.remove('hide');
