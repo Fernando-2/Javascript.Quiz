@@ -3,7 +3,7 @@ var Next = document.querySelector("#next");
 var count = 0;
 var counter = document.querySelector("#counter");
 var scoreHolder = document.querySelector("#scoreContainer");
-var score = 0;
+var score = -5;
 var initials = document.querySelector("#initials");
 var questionContainer = document.querySelector("#question-container");
 var questionEl = document.querySelector("#question");
@@ -98,8 +98,7 @@ function clearStatusClass(element){
     element.classList.remove('wrong');
 }
 //function ends that pops up at the end of the game when either timer runs out
-//or game is finished then lets you type you initial and puts your score next to
-//it there is a bug where number correct is added to number of questions could not figure out why
+//or game is finished then lets you type you initial and puts your score next to it
 function stopGame(){
     questionContainer.classList.add('hide')
     gameOver.classList.remove('hide')
